@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MeowSocial.lab</title>
+    <link rel="stylesheet" href="styles/style.css">
+
+  </head>
+  <body>
+    <button class="startButton style-button">Start</button>
+    <p class="randomNum"></p>
+    <p class="resultgame"></p>
+    <p class="newhighscore"></p>
+    <button class="toggle Easy">Easy</button>
+    <button class="Medium">Medium</button>
+    <button class="Difficult">Difficult</button>
+
+    <script>
+        //localStorage.clear();
+        let difficulty = 'Easy';
+        let highscoreEasy = parseInt(localStorage.getItem("highscoreDiffEasy"))  || undefined;
+        let highscoreMedium = parseInt(localStorage.getItem("highscoreDiffMedium")) || undefined;
+        let highscoreDifficult = parseInt(localStorage.getItem("highscoreDiffDifficult")) || undefined;
+        //let highscore;
+        let toggle;
+        let game;
+        let randomNumber;
+        let countersec = 0;
+        let myTimeout;
+        //let toggleDifficulty;
+        //console.log(highscoreMedium);
+        //console.log(highscoreDifficult);
+        //let difficulty = 'Easy';
+        //console.log(highscoreEasy);
+        //console.log(window[`highscore${difficulty}`]);
+        //const toggleClassDifficulty = () => document.querySelector('.toggle').classList.remove('toggle');
+
+        if (highscoreEasy === undefined){
+            document.querySelector('.newhighscore').innerHTML = `Highscore on ${difficulty} - yet to be set!`
+        } else {
+            document.querySelector('.newhighscore').innerHTML = `Highscore on ${difficulty} - ${highscoreEasy}`
+        }
+       
+        console.log(highscoreEasy);
+
+        document.querySelector('.Easy').addEventListener('click', () => {chooseDifficulty('Easy')});
+
+        document.querySelector('.Medium').addEventListener('click', () => {chooseDifficulty('Medium')});
+
+        document.querySelector('.Difficult').addEventListener('click', () => {chooseDifficulty('Difficult')});
+
+
+        function chooseDifficulty(difficultyGame) {
+            document.querySelector('.toggle').classList.remove('toggle');
+            document.querySelector(`.${difficultyGame}`).classList.add('toggle');
+            difficulty = difficultyGame;
+            if(window[`highscore${difficulty}`] === undefined){
+                document.querySelector('.newhighscore').innerHTML = `Highscore on ${difficulty} - yet to be set!`;
+
+            } else {
+                document.querySelector('.newhighscore').innerHTML = `Highscore on ${difficulty} - ${window[`highscore${difficulty}`]}`;
+            }
+
+        }
+
+
+        document.querySelector('.startButton').addEventListener('click', () => startSession());
+
+
+        function startSession(){
+
+            if (document.querySelector('.startButton').innerHTML === 'Start'){
+                genRandomNum();
+            } else {
+                if(!game){
+                    genRandomNum();
+                } else {
+                    startAction();
+                }
+            }
+        }
+
+        function genRandomNum(){
+            game = true;
+            document.querySelector('.resultgame').innerHTML = '';
+            randomNumber = Math.round(Math.random() * 100);
+            document.querySelector('.startButton').innerHTML = randomNumber;
+        
+        }
+
+        function startAction(){
+            !toggle ? startTimer() : myStopFunction();
+            document.querySelector('.randomNum').innerHTML = randomNumber;
+        }
+
+        function startTimer (){
+            if (difficulty === 'Easy'){
+                myTimeout = setInterval(countSeconds, 100);
+            } else if (difficulty === 'Medium'){
+                myTimeout = setInterval(countSeconds, 59);
+            } else {
+                myTimeout = setInterval(countSeconds, 23);
+            }
+            toggle = true;
+        }
+
+        function countSeconds (){
+            countersec++;
+            document.querySelector('.startButton').innerHTML = countersec;
+
+        }
+
+        function myStopFunction() {
+         clearInterval(myTimeout);
+         result();
+         countersec = 0;
+         toggle = false;
+         game = false;
+        }
+
+        function result(){
+            let resultSession = Math.abs(randomNumber-countersec);
+            document.querySelector('.resultgame').innerHTML = `result ${resultSession}`;
+            console.log(window[`highscore${difficulty}`]);
+            if(window[`highscore${difficulty}`] === undefined){
+                window[`highscore${difficulty}`] = resultSession;
+                localStorage.setItem(`highscoreDiff${difficulty}`, window[`highscore${difficulty}`.toString()]);
+                document.querySelector('.newhighscore').innerHTML = `Highscore on ${difficulty} - ${window[`highscore${difficulty}`]}`;
+            } else if(resultSession < window[`highscore${difficulty}`]){
+                window[`highscore${difficulty}`] = resultSession;
+                document.querySelector('.newhighscore').innerHTML = `Highscore on ${difficulty} - ${window[`highscore${difficulty}`]}`;
+                localStorage.setItem(`highscoreDiff${difficulty}`,  window[`highscore${difficulty}`.toString()]);
+            }
+
+           //console.log(difficulty);
+            //console.log(resultSession);
+            //console.log(highscore);
+        }
+
+      
+     
+
+    </script>
+  </body>
+</html>
