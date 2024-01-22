@@ -17,9 +17,9 @@
     <script>
         //localStorage.clear();
         let difficulty = 'Easy';
-        let highscoreEasy = parseInt(localStorage.getItem("highscoreDiffEasy"))  || undefined;
-        let highscoreMedium = parseInt(localStorage.getItem("highscoreDiffMedium")) || undefined;
-        let highscoreDifficult = parseInt(localStorage.getItem("highscoreDiffDifficult")) || undefined;
+        var highscoreEasy = parseInt(localStorage.getItem("highscoreDiffEasy"))  || undefined;
+        var highscoreMedium = parseInt(localStorage.getItem("highscoreDiffMedium")) || undefined;
+        var highscoreDifficult = parseInt(localStorage.getItem("highscoreDiffDifficult")) || undefined;
         let toggle;
         let game;
         let randomNumber;
@@ -53,6 +53,8 @@
             document.querySelector('.toggle').classList.remove('toggle');
             document.querySelector(`.${difficultyGame}`).classList.add('toggle');
             difficulty = difficultyGame;
+            //console.log(highscoreEasy);
+            console.log(window[`highscore${difficulty}`]);
             if(window[`highscore${difficulty}`] === undefined){
                 document.querySelector('.newhighscore').innerHTML = `Highscore on ${difficulty} - yet to be set!`;
 
@@ -94,11 +96,11 @@
 
         function startTimer (){
             if (difficulty === 'Easy'){
-                myTimeout = setInterval(countSeconds, 100);
+                myTimeout = setInterval(countSeconds, 80);
             } else if (difficulty === 'Medium'){
-                myTimeout = setInterval(countSeconds, 59);
+                myTimeout = setInterval(countSeconds, 42);
             } else {
-                myTimeout = setInterval(countSeconds, 23);
+                myTimeout = setInterval(countSeconds, 13);
             }
             toggle = true;
         }
