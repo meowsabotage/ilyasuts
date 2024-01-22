@@ -26,14 +26,7 @@
         let countersec = 0;
         let myTimeout;
         
-        //let toggleDifficulty;
-        //console.log(highscoreMedium);
-        //console.log(highscoreDifficult);
-        //let difficulty = 'Easy';
-        //console.log(highscoreEasy);
-        //console.log(window[`highscore${difficulty}`]);
-        //const toggleClassDifficulty = () => document.querySelector('.toggle').classList.remove('toggle');
-
+     
         if (highscoreEasy === undefined){
             document.querySelector('.newhighscore').innerHTML = `Highscore on ${difficulty} - yet to be set!`
         } else {
@@ -53,7 +46,6 @@
             document.querySelector('.toggle').classList.remove('toggle');
             document.querySelector(`.${difficultyGame}`).classList.add('toggle');
             difficulty = difficultyGame;
-            //console.log(highscoreEasy);
             console.log(window[`highscore${difficulty}`]);
             if(window[`highscore${difficulty}`] === undefined){
                 document.querySelector('.newhighscore').innerHTML = `Highscore on ${difficulty} - yet to be set!`;
@@ -133,9 +125,7 @@
                 localStorage.setItem(`highscoreDiff${difficulty}`,  window[`highscore${difficulty}`.toString()]);
             }
 
-           //console.log(difficulty);
-            //console.log(resultSession);
-            //console.log(highscore);
+          
         }
 
       
